@@ -151,7 +151,6 @@ function weightedUniformStrings(string, queries) {
 			}else{
 				result.push("No")
 			}
-			if(i == (getString.length-1)){}
 			count = 0;
 			for(let k = 0;k<dict.length;k++){
 				if(dict[k].key == getString[i]){
@@ -159,7 +158,21 @@ function weightedUniformStrings(string, queries) {
 				}
 			};
 			
-			count += weight;		
+			count += weight;			
+			
+			if(i == (getString.length-1)){
+			
+				if(count == queries[arcnt]){
+				result.push("Yes");
+				}else{
+					result.push("No")
+				}
+			
+			}
+		
+		
+		
+		
 			
 			
 			arcnt++;
