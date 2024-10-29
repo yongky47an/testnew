@@ -59,9 +59,9 @@
 		<div class="col-12">
 			<h3 class="mb-3"> Test 2</h3>
 			<div class="mb-3 row">
-				<label for="" class="col-sm-2 col-form-label">Input your text</label>
+				<label for="" class="col-sm-2 col-form-label">Input your text balance</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="text_two">
+				  <input type="text" class="form-control" id="text_tree" placeholder="(xcxzg()()))" value = "(xcxzg,:;()()))">
 				</div>
 			</div>
 			<div class="mb-3 row">
@@ -78,7 +78,31 @@
 			</div>	
 		</div>
 		<div class="col-12">
-		  One of two columns
+			<h3 class="mb-3"> Test 3</h3>
+			<div class="mb-3 row">
+				<label for="" class="col-sm-2 col-form-label">Input yout string </label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="text_four" placeholder="3943" value = "3943">
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="" class="col-sm-2 col-form-label">Input your quantity</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="text_five" placeholder="1"  value="1">
+				</div>
+			</div>				
+			<div class="mb-3 row">
+				<label for="" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+				  <input type="button" value="Process" class="btn btn-primary" id="text_tree_process"> 
+				</div>
+			</div>	
+			<div class="mb-3 row">
+				<label for="" class="col-sm-2 col-form-label">Output</label>
+				<div class="col-sm-10">
+					<textarea id="text_tree_output" class="form-control" rows="4"></textarea>
+				</div>
+			</div>	
 		</div>		
 	</div>
 </div>
@@ -100,8 +124,23 @@ $(document).ready(function(){
 		
     });
 
+	$("#text_two_process").click(function(){
+        
+		var textTree = $('#text_tree').val();		
 
+		$('#text_two_output').val(isBalanced(textTree));
+		
+    });
 
+	$("#text_tree_process").click(function(){
+        
+		var textFour = $('#text_four').val();	
+		var textFive = $('#text_five').val();			
+
+		$('#text_tree_output').val(highestPalindrome(textFour, textFive));
+		
+    });
+	
 });
 
 
@@ -142,10 +181,6 @@ function weightedUniformStrings(string, queries) {
 			
 			count += weight;
 		}else{
-			console.log(getString[i]);
-			console.log(count+' - '+queries[arcnt]);
-			
-
 			if(count == queries[arcnt]){
 				result.push("Yes");
 			}else{
@@ -168,12 +203,7 @@ function weightedUniformStrings(string, queries) {
 					result.push("No")
 				}
 			
-			}
-		
-		
-		
-		
-			
+			}			
 			
 			arcnt++;
 		}
@@ -186,6 +216,59 @@ function weightedUniformStrings(string, queries) {
 	
 };
 
+
+
+
+function isBalanced(s) {
+  const stack = [];
+  const bracketMap = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+  };
+
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    if (char in bracketMap) {
+      stack.push(char);
+    } else if (Object.values(bracketMap).includes(char)) {
+      if (stack.length === 0 || bracketMap[stack.pop()] !== char) {
+        return false;
+      }
+    }
+  }
+
+  return stack.length === 0;
+}
+
+function highestPalindrome(s, k) {
+  const n = s.length;
+  const arr = s.split('').map(Number);
+
+  for (let i = 0; i < Math.floor(n / 2); i++) {
+    if (arr[i] !== arr[n - 1 - i]) {
+      if (k > 0) {
+        k--;
+        arr[i] = arr[n - 1 - i] = Math.max(arr[i], arr[n - 1 - i]);
+      } else {
+        return -1; // cannot form a palindrome
+      }
+    }
+  }
+
+  if (k > 0 && n % 2 === 1) {
+    arr[Math.floor(n / 2)] = 9;
+  }
+
+  for (let i = 0; i < Math.floor(n / 2) && k > 0; i++) {
+    if (arr[i] !== 9) {
+      arr[i] = arr[n - 1 - i] = 9;
+      k--;
+    }
+  }
+
+  return arr.join('');
+}
 
 
 </script>
